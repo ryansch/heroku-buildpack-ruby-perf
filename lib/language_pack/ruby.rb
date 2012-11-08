@@ -124,6 +124,9 @@ private
       @ruby_version_env_var = false
     end
 
+    # We can't specify a perf version in the Gemfile so we hardcode it here.
+    @ruby_version = "#{@ruby_version}-perf"
+
     @ruby_version
   end
 
