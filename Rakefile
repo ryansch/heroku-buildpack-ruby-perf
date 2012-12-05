@@ -156,7 +156,7 @@ end
 desc "install ruby"
 task "ruby:install", :version, :perf do |t, args|
   full_version   = args[:version]
-  perf           = !!( args[:perf] && %w(1.9.3-p194 1.9.3-p286).include?(full_version) )
+  perf           = !!( args[:perf] && %w(1.9.3-p194 1.9.3-p286 1.9.3-p327).include?(full_version) )
   full_name      = "ruby-#{full_version}"
   version        = full_version.split('-').first
   name           = "ruby-#{version}#{'-perf' if perf}"
@@ -174,7 +174,8 @@ task "ruby:install", :version, :perf do |t, args|
 
       if perf
         Dir.chdir(full_name) do
-          sh "curl https://raw.github.com/gist/2593385/perf_and_gc.diff | patch -p1"
+          sh "curl https://raw.github.com/gist/2593385/perf_and_gc.diff | patch -p1" if %w(1.9.3-p194 1.9.3p286).include?(full_version)
+          sh "curl https://raw.github.com/gist/4136373/falcon-gc.diff | patch -p1" if %w(1.9.3-p327).include?(full_version)
         end
       end
 
